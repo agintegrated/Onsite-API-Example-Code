@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +13,7 @@ namespace Onsite_API_Example_Code
     /// </summary>
     public class Api
     {
-        private static string BaseUrl = "https://localhost:5001/api/";
+        private static string BaseUrl = "https://qc-pro.onsiteag.com/api";
 
         /// <summary>
         /// Creates an HttpClient that can be called on-demand.
@@ -31,7 +29,11 @@ namespace Onsite_API_Example_Code
             get { return LazyClient.Value; }
         }
 
-        // Creates an HTTP request that includes the headers and URL.
+        /// <summary>
+        ///  Creates an HTTP request that includes the headers and URL.
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <param name="endpoint"></param>
         private static HttpRequestMessage GetHttpRequest(Dictionary<string, string> headers, string endpoint)
         {
             var request = new HttpRequestMessage
@@ -45,7 +47,12 @@ namespace Onsite_API_Example_Code
             return request;
         }
 
-        // Methods that return an HTTP response for the specific request types (GET, POST, etc.).
+        /// <summary>
+        /// Methods that return an HTTP response for the specific request types (GET, POST, etc.).
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="headers"></param>
+        /// 
         #region Http Method helpers
 
         public static async Task<HttpResponseMessage> Get(string endpoint, Dictionary<string, string> headers)
@@ -185,7 +192,6 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="response"></param>
-        /// <returns></returns>
         public static async Task<T> DeserializeContent<T>(HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
@@ -196,7 +202,6 @@ namespace Onsite_API_Example_Code
         /// Wrapper around <see cref="JsonConvert.SerializeObject(object)"/> with custom settings.
         /// </summary>
         /// <param name="o"></param>
-        /// <returns></returns>
         public static string Serialize(object o)
         {
             var settings = new JsonSerializerSettings
@@ -219,7 +224,6 @@ namespace Onsite_API_Example_Code
         /// <param name="timeoutMessage">A message for when the timeout is exceeded</param>
         /// <param name="until">Async function to call every pollInterval. Return true to end waiting.</param>
         /// <param name="pollIntervalInSeconds">Call the function every...</param>
-        /// <returns></returns>
         public static async Task PollUntil(TimeSpan timeout, string timeoutMessage, Func<StringBuilder, Task<bool>> until, int pollIntervalInSeconds = 4)
         {
             // Set a cap on how long this can run

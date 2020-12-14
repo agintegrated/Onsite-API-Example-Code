@@ -4,11 +4,9 @@ using System.Text;
 
 namespace Onsite_API_Example_Code.Models.Response
 {
-    public class DeleteNotificationDisenrollmentResponse
+    public class SuccessMessageResponse
     {
         public bool Success { get; set; }
         public string Message { get; set; }
     }
 }
-
-    
