@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="lib\" />
-    <Folder Include="Models\Request\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

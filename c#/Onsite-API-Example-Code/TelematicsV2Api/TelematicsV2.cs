@@ -1,9 +1,11 @@
 ﻿using Api;
+using Onsite_API_Example_Code.Models.Request;
 using Onsite_API_Example_Code.Models.Response;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Onsite_API_Example_Code
@@ -140,12 +142,14 @@ namespace Onsite_API_Example_Code
         /// Api partners with FDA permissions can include an Fda Configuration in the request to have the notification converted to a specified output preference.
         /// </summary>
         /// <param name="nodeId"></param>
-        /// <param name="json"></param>
+        /// <param name="postNotificationSnsRequest"></param>
         /// <returns></returns>
 
-        public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollmentSns(int nodeId, string json)
+        public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollmentSns(int nodeId, PostNotificationSnsRequest postNotificationSnsRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/sns", "POST");
+
+            string json = JsonSerializer.Serialize(postNotificationSnsRequest);
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -161,11 +165,13 @@ namespace Onsite_API_Example_Code
         /// Api partners with FDA permissions can include an FDA Configuration in the request to have the notification converted to a specified output preference.
         /// </summary>
         /// <param name="nodeId"></param>
-        /// <param name="json"></param>
+        /// <param name="postNotificationRequest"></param>
         /// <returns></returns>
-        public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollment(int nodeId, string json)
+        public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollment(int nodeId, PostRequest postNotificationRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/post", "POST");
+
+            string json = JsonSerializer.Serialize(postNotificationRequest);
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -181,7 +187,7 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        public async Task<SuccessMessageResponse> DeleteNotificationDisenrollment( int nodeId)
+        public async Task<SuccessMessageResponse> DeleteNotificationDisenrollment(int nodeId)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/disenroll", "DELETE");
 
@@ -258,11 +264,13 @@ namespace Onsite_API_Example_Code
         /// The POST /TelematicsNodeV2/Enrollment/File endpoint enrolls a list of Telematics Node(s) which have notifications for File Conversion and/or S3 Storage. 
         /// Api partners with FDA permissions can include an FDA Configuration in the request to have the notification converted to a specified output preference
         /// </summary>
-        /// <param name="json"></param>
+        /// <param name="fileRequest"></param>
         /// <returns></returns>
-        public async Task<PostNotificationEnrollmentResponse> PostNotificationFile(string json)
+        public async Task<PostNotificationEnrollmentResponse> PostNotificationFile(FileRequest fileRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/file", "POST");
+
+            string json = JsonSerializer.Serialize(fileRequest);
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -378,13 +386,15 @@ namespace Onsite_API_Example_Code
         /// This endpoint is currently only supported for Climate equipment nodes.
         /// </summary>
         /// <param name="nodeId"></param>
-        /// <param name="boundary"></param>
+        /// <param name="postTelematicsNodeFieldBoundaryRequest"></param>
         /// <returns></returns>
-        public async Task<SuccessMessageResponse> PostTelematicsNodeFieldBoundary(int nodeId, string boundary)
+        public async Task<SuccessMessageResponse> PostTelematicsNodeFieldBoundary(int nodeId, PostTelematicsNodeFieldBoundaryRequest postTelematicsNodeFieldBoundaryRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/fieldboundary", "POST");
 
-            HttpContent content = new StringContent(boundary, Encoding.UTF8, "application/json");
+            string json = JsonSerializer.Serialize(postTelematicsNodeFieldBoundaryRequest);
+
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await Api.Post($"telematicsnodev2/{nodeId}/fieldboundary", headers, content);
 
@@ -398,11 +408,13 @@ namespace Onsite_API_Example_Code
          /// allow the user to request a summary of their planting information based on a set of passed parameters.
          /// </summary>
          /// <param name="nodeId"></param>
-         /// <param name="json"></param>
+         /// <param name="postPlantingSummaryRequest"></param>
          /// <returns></returns>
-        public async Task<PostPlantingSummaryResponse> PostTelematicsNodePlantingSummary(int nodeId, string json)
+        public async Task<PostPlantingSummaryResponse> PostTelematicsNodePlantingSummary(int nodeId, PostPlantingSummaryRequest postPlantingSummaryRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/plantingsummary", "POST");
+
+            string json = JsonSerializer.Serialize(postPlantingSummaryRequest);
 
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 

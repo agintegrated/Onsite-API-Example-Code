@@ -1,4 +1,5 @@
 ﻿using Onsite_API_Example_Code;
+using Onsite_API_Example_Code.Models.Request;
 using Onsite_API_Example_Code.Models.Response;
 using System;
 using System.Threading.Tasks;
@@ -15,15 +16,14 @@ namespace OnsiteAPIExample
         static int telematicsNode;
 
         /// <summary>
-        /// Example strings used for the various endpoints
+        /// Example post classes used for the various endpoints
         /// </summary>
-        static string exampleSns = "{'ApiKey': '','SecretKey': '','TopicArn': '','Region': ''}";
-        static string examplePost = "{'Url': 'url'}";
-        static string exampleRawFileStorage = "'RawFileStorage': {'BucketName': '','BucketPath': '','AccessKey': '','SecretKey': ''}";
-        static string exampleFdaConf = "'FdaConfiguration': {'OutputAdapter': '','OutputPreferences':{}";
-        static string myBoundary = "{'type': '', 'features': [{'type': 'Feature','properties': {}";
-        static string exampleNotificationJson = "{'NotificationIds': []," + exampleFdaConf + exampleRawFileStorage + "}";
-        static string exampleCallbackWithDate = "{ 'StartDate': '2020-04-06T15:34:36.600Z', 'EndDate': '2020-04-06T15:34:36.600Z', 'CallbackURL': '' }";
+        //  static PostTelematicsNodeFieldBoundaryRequest postTelematicsNodeFieldBoundary = new PostTelematicsNodeFieldBoundaryRequest { type = "FeatureCollection", features = };
+        //  static RawFileStorageRequest rawFileStorage = new RawFileStorageRequest { AccessKey = "", BucketName = "", Region = "", SecretKey = "", BucketPath = "" };
+        //  static FileRequest fileRequest = new FileRequest { NotificationIds = , RawFileStorage = };
+        //  static PostRequest postRequest = new PostRequest { Url = "" };
+        //  static PostPlantingSummaryRequest postPlantingSummaryRequest = new PostPlantingSummaryRequest { StartDate = DateTime.Parse("2020-04-06T15:34:36.600Z"), EndDate = DateTime.Parse("2020-04-06T15:34:36.600Z"), CallbackURL = "" };
+        //  static PostNotificationSnsRequest postNotificationSnsRequest = new PostNotificationSnsRequest { ApiKey = "", SecretKey = "", TopicArn = "", Region = "" };
 
         /// <summary>
         /// The main entry point for the application.
@@ -31,6 +31,7 @@ namespace OnsiteAPIExample
         [STAThread]
         static async Task Main()
         {
+            
 
         }
 
@@ -64,18 +65,18 @@ namespace OnsiteAPIExample
             return true;
         }
 
-        public static async Task<PostNotificationEnrollmentResponse> EnrollmentSnsExample(string json)
+        public static async Task<PostNotificationEnrollmentResponse> EnrollmentSnsExample(int telematicsNode, PostNotificationSnsRequest postNotificationSnsRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            PostNotificationEnrollmentResponse response = await telematicsV2.PostNotificationEnrollmentSns(telematicsNode, json);
+            PostNotificationEnrollmentResponse response = await telematicsV2.PostNotificationEnrollmentSns(telematicsNode, postNotificationSnsRequest);
 
             return response;
         }
 
-        public static async Task<PostNotificationEnrollmentResponse> EnrollmentExample(string json)
+        public static async Task<PostNotificationEnrollmentResponse> EnrollmentExample(int telematicsNode, PostRequest postRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            PostNotificationEnrollmentResponse response = await telematicsV2.PostNotificationEnrollment(telematicsNode, json);
+            PostNotificationEnrollmentResponse response = await telematicsV2.PostNotificationEnrollment(telematicsNode, postRequest);
 
             return response;
         }
@@ -120,10 +121,10 @@ namespace OnsiteAPIExample
             return response;
         }
 
-        public static async Task<PostNotificationEnrollmentResponse> PostNotificationFile(string json)
+        public static async Task<PostNotificationEnrollmentResponse> PostNotificationFile(FileRequest fileRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            PostNotificationEnrollmentResponse response = await telematicsV2.PostNotificationFile(json);
+            PostNotificationEnrollmentResponse response = await telematicsV2.PostNotificationFile(fileRequest);
 
             return response;
         }
@@ -176,18 +177,18 @@ namespace OnsiteAPIExample
             return response;
         }
 
-        public static async Task<SuccessMessageResponse> PostTelematicsNodeFieldBoundary(int nodeId, string boundary)
+        public static async Task<SuccessMessageResponse> PostTelematicsNodeFieldBoundary(int nodeId, PostTelematicsNodeFieldBoundaryRequest postTelematicsNodeFieldBoundaryRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            SuccessMessageResponse response = await telematicsV2.PostTelematicsNodeFieldBoundary(nodeId, boundary);
+            SuccessMessageResponse response = await telematicsV2.PostTelematicsNodeFieldBoundary(nodeId, postTelematicsNodeFieldBoundaryRequest);
 
             return response;
         }
 
-        public static async Task<PostPlantingSummaryResponse> PostTelematicsNodePlantingSummaryExample(int nodeId, string json)
+        public static async Task<PostPlantingSummaryResponse> PostTelematicsNodePlantingSummaryExample(int nodeId, PostPlantingSummaryRequest postPlantingSummaryRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            PostPlantingSummaryResponse response = await telematicsV2.PostTelematicsNodePlantingSummary(nodeId, json);
+            PostPlantingSummaryResponse response = await telematicsV2.PostTelematicsNodePlantingSummary(nodeId, postPlantingSummaryRequest);
 
             return response;
         }
