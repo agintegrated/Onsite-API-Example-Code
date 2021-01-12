@@ -13,7 +13,7 @@ namespace Onsite_API_Example_Code
     /// </summary>
     public class Api
     {
-        private static string BaseUrl = "http://sandbox-dataexchange.onsiteag.com/api/";
+        private static string BaseUrl = "https://sandbox-dataexchange.onsiteag.com/api/";
 
         /// <summary>
         /// Creates an HttpClient that can be called on-demand.
