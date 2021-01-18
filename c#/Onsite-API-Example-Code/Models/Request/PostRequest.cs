@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Onsite_API_Example_Code.Models.Response;
+using System.ComponentModel.DataAnnotations;
 
 namespace Onsite_API_Example_Code.Models.Request
 {
@@ -7,8 +8,8 @@ namespace Onsite_API_Example_Code.Models.Request
         [Required]
         public string Url { get; set; }
 
-        public FdaConfigurationRequest FdaConfiguration { get; set; }
+        public FdaConfiguration FdaConfiguration { get; set; }
 
-        public RawFileStorageRequest RawFileStorage { get; set; }
+        public RawFileStorage RawFileStorage { get; set; }
     }
 }

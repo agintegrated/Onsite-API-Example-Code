@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Onsite_API_Example_Code.Models.Response;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Onsite_API_Example_Code.Models.Request
@@ -9,8 +10,8 @@ namespace Onsite_API_Example_Code.Models.Request
         [Required]
         public List<int> NotificationIds { get; set; }
 
-        public FdaConfigurationRequest FdaConfiguration { get; set; }
+        public FdaConfiguration FdaConfiguration { get; set; }
 
-        public RawFileStorageRequest RawFileStorage { get; set; }
+        public RawFileStorage RawFileStorage { get; set; }
     }
 }
