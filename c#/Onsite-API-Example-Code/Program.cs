@@ -49,13 +49,13 @@ namespace OnsiteAPIExample
 
             return response;
         }
-        public static async Task<PostSendFileResponse> UploadFileExample(string fileName, string filePath)
+        /*public static async Task<PostSendFileResponse> UploadFileExample(string fileName, string filePath)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
             PostSendFileResponse response = await telematicsV2.PostSendFiles(telematicsNode, filePath, fileName);
 
             return response;
-        }
+        }*/
         public static bool DownloadFileExample(string fileId)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
