@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Onsite_API_Example_Code
 {
     /// <summary>
-    /// Here we do any one-time setup for the entire example project. 
+    /// Here we do any one-time setup for the entire example project. git 
     /// Initialize the the HTTP client used to make calls to it.
     /// </summary>
     public class Api
