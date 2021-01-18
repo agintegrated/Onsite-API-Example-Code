@@ -1,11 +1,11 @@
 ﻿using Api;
+using Newtonsoft.Json;
 using Onsite_API_Example_Code.Models.Request;
 using Onsite_API_Example_Code.Models.Response;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Onsite_API_Example_Code
@@ -95,7 +95,7 @@ namespace Onsite_API_Example_Code
         /// <param name="nodeId"></param>
         /// <param name="fileId"></param>
 
-        public async void GetDownloadFilesWithoutConversion( int nodeId, string fileId)
+        public async Task<bool> GetDownloadFilesWithoutConversion( int nodeId, string fileId)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/files/{fileId}");
 
@@ -107,6 +107,8 @@ namespace Onsite_API_Example_Code
                 Stream file = await response.Content.ReadAsStreamAsync();
                 file.CopyTo(fileStream);
             }
+
+            return true;
         }
 
 
@@ -149,7 +151,7 @@ namespace Onsite_API_Example_Code
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/sns", "POST");
 
-            string json = JsonSerializer.Serialize(postNotificationSnsRequest);
+            string json = JsonConvert.SerializeObject(postNotificationSnsRequest);
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -171,7 +173,7 @@ namespace Onsite_API_Example_Code
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/post", "POST");
 
-            string json = JsonSerializer.Serialize(postNotificationRequest);
+            string json = JsonConvert.SerializeObject(postNotificationRequest);
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -270,7 +272,7 @@ namespace Onsite_API_Example_Code
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/file", "POST");
 
-            string json = JsonSerializer.Serialize(fileRequest);
+            string json = JsonConvert.SerializeObject(fileRequest);
 
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -392,7 +394,7 @@ namespace Onsite_API_Example_Code
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/fieldboundary", "POST");
 
-            string json = JsonSerializer.Serialize(postTelematicsNodeFieldBoundaryRequest);
+            string json = JsonConvert.SerializeObject(postTelematicsNodeFieldBoundaryRequest);
 
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -414,7 +416,7 @@ namespace Onsite_API_Example_Code
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/plantingsummary", "POST");
 
-            string json = JsonSerializer.Serialize(postPlantingSummaryRequest);
+            string json = JsonConvert.SerializeObject(postPlantingSummaryRequest);
 
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 

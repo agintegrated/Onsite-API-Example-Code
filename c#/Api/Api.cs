@@ -59,6 +59,7 @@ namespace Onsite_API_Example_Code
         {
             var request = GetHttpRequest(headers, endpoint);
             request.Method = HttpMethod.Get;
+
             var response = await Client.SendAsync(request);
             return response;
         }
