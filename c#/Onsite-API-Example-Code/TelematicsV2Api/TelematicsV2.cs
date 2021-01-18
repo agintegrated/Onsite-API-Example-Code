@@ -12,15 +12,15 @@ namespace Onsite_API_Example_Code
 {
     public class TelematicsV2
     {
-        string publicKey;
-        string privateKey;
-        string userKey;
+        readonly string PublicKey;
+        readonly string PrivateKey;
+        readonly string UserKey;
 
         public TelematicsV2(string publicKey, string privateKey, string userKey)
         {
-            this.publicKey = publicKey;
-            this.privateKey = privateKey;
-            this.userKey = userKey;
+            this.PublicKey = publicKey;
+            this.PrivateKey = privateKey;
+            this.UserKey = userKey;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Onsite_API_Example_Code
 
         public async Task<GetTreeResponse> GetTree()
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, "telematicsnodev2/tree");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, "telematicsnodev2/tree");
 
             HttpResponseMessage response = await Api.Get("telematicsnodev2/tree", headers);
 
@@ -48,7 +48,7 @@ namespace Onsite_API_Example_Code
 
         public async Task<GetEquipmentRegisterResponse> GetEquipmentRegister()
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, "telematicsnodev2/equipment/register");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, "telematicsnodev2/equipment/register");
 
             HttpResponseMessage response = await Api.Get("telematicsnodev2/equipment/register", headers);
 
@@ -71,21 +71,15 @@ namespace Onsite_API_Example_Code
         /// <param name="fileName"></param>
         /// <returns></returns>
 
-        public async Task<PostSendFileResponse> PostSendFiles( int nodeId, string pathToFile, string fileName)
+        public async Task<PostSendFileResponse> PostSendFiles(int nodeId, FileInfo fileToSend)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/files", "POST");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/files", "POST");
 
             MultipartFormDataContent content = new MultipartFormDataContent();
-
-            HttpContent bytes = new ByteArrayContent(File.ReadAllBytes(pathToFile));
-
-            content.Add(bytes, "fileToSend", fileName);
-
+            HttpContent bytes = new ByteArrayContent(File.ReadAllBytes(fileToSend.FullName));
+            content.Add(bytes, "fileToSend", fileToSend.Name);
             HttpResponseMessage response = await Api.Post($"telematicsnodev2/{nodeId}/files", headers, content);
-
-            PostSendFileResponse result = await Api.DeserializeContent<PostSendFileResponse>(response);
-
-            return result;
+            return await Api.DeserializeContent<PostSendFileResponse>(response);
         }
 
         /// <summary>
@@ -95,9 +89,9 @@ namespace Onsite_API_Example_Code
         /// <param name="nodeId"></param>
         /// <param name="fileId"></param>
 
-        public async void GetDownloadFilesWithoutConversion( int nodeId, string fileId)
+        public async Task<FileInfo> GetDownloadFilesWithoutConversion( int nodeId, string fileId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/files/{fileId}");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/files/{fileId}");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{nodeId}/files/{fileId}", headers);
 
@@ -107,8 +101,9 @@ namespace Onsite_API_Example_Code
                 Stream file = await response.Content.ReadAsStreamAsync();
                 file.CopyTo(fileStream);
             }
-        }
 
+            return new FileInfo(tempFile);
+        }
 
         /// <summary>
         /// The GET TelematicsNodeV2/{telematicsNodeID}/Files/{fileId} (Download File) endpoint downloads the specified file from the API equipment. 
@@ -122,7 +117,7 @@ namespace Onsite_API_Example_Code
 
         public async Task<GetFileDownloadResponse> GetDownloadFilesWithConversion(int nodeId, string fileId, string callbackUrl, string conversionType)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/files/{fileId}");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/files/{fileId}");
 
             Dictionary<string, string> queryParams = new Dictionary<string, string>();
 
@@ -147,7 +142,7 @@ namespace Onsite_API_Example_Code
 
         public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollmentSns(int nodeId, PostNotificationSnsRequest postNotificationSnsRequest)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/sns", "POST");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}/sns", "POST");
 
             string json = JsonSerializer.Serialize(postNotificationSnsRequest);
 
@@ -169,7 +164,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollment(int nodeId, PostRequest postNotificationRequest)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/post", "POST");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}/post", "POST");
 
             string json = JsonSerializer.Serialize(postNotificationRequest);
 
@@ -189,7 +184,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<SuccessMessageResponse> DeleteNotificationDisenrollment(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}/disenroll", "DELETE");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}/disenroll", "DELETE");
 
             HttpResponseMessage response = await Api.Delete($"telematicsnodev2/notifications/{nodeId}/disenroll", headers);
 
@@ -204,7 +199,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<GetNotificationResponse> GetNotificationUser()
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/user");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/user");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications/user", headers);
 
@@ -220,7 +215,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<GetNotificationResponse> GetNotificationUserForNode(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/user/{nodeId}");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/user/{nodeId}");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications/user/{nodeId}", headers);
 
@@ -235,7 +230,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<GetNotificationResponse> GetNotificationForApiPartner()
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications", headers);
 
@@ -251,7 +246,7 @@ namespace Onsite_API_Example_Code
          /// <returns></returns>
         public async Task<GetNotificationResponse> GetNotificationForApiPartnerByNode(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/{nodeId}");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications/{nodeId}", headers);
 
@@ -268,7 +263,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<PostNotificationEnrollmentResponse> PostNotificationFile(FileRequest fileRequest)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/notifications/file", "POST");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/file", "POST");
 
             string json = JsonSerializer.Serialize(fileRequest);
 
@@ -288,7 +283,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<TelematicsNodeResponse> GetTelematicsNode(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{nodeId}", headers);
 
@@ -305,7 +300,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<SuccessMessageResponse> DeleteTelematicsNode(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}", "DELETE");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}", "DELETE");
 
             HttpResponseMessage response = await Api.Delete($"telematicsnodev2/{nodeId}", headers);
 
@@ -322,7 +317,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<GetTelematicsNodeFilesResponse> GetTelematicsNodeFiles(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/files");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/files");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{nodeId}/files", headers);
 
@@ -339,7 +334,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<GetFileStatusResponse> GetFileStatus(string trackingCode)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{trackingCode}/filestatus");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{trackingCode}/filestatus");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{trackingCode}/filestatus", headers);
 
@@ -355,7 +350,7 @@ namespace Onsite_API_Example_Code
          /// <returns></returns>
         public async Task<GetFieldResponse> GetTelematicsNodeFields(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/fields");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/fields");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{nodeId}/fields", headers);
 
@@ -372,7 +367,7 @@ namespace Onsite_API_Example_Code
          /// <returns></returns>
         public async Task<GetFieldBoundaryResponse> GetTelematicsNodeFieldBoundary(int nodeId)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/fieldboundary");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/fieldboundary");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{nodeId}/fieldboundary", headers);
 
@@ -390,7 +385,7 @@ namespace Onsite_API_Example_Code
         /// <returns></returns>
         public async Task<SuccessMessageResponse> PostTelematicsNodeFieldBoundary(int nodeId, PostTelematicsNodeFieldBoundaryRequest postTelematicsNodeFieldBoundaryRequest)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/fieldboundary", "POST");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/fieldboundary", "POST");
 
             string json = JsonSerializer.Serialize(postTelematicsNodeFieldBoundaryRequest);
 
@@ -412,7 +407,7 @@ namespace Onsite_API_Example_Code
          /// <returns></returns>
         public async Task<PostPlantingSummaryResponse> PostTelematicsNodePlantingSummary(int nodeId, PostPlantingSummaryRequest postPlantingSummaryRequest)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/plantingsummary", "POST");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/plantingsummary", "POST");
 
             string json = JsonSerializer.Serialize(postPlantingSummaryRequest);
 
@@ -434,7 +429,7 @@ namespace Onsite_API_Example_Code
          /// <returns></returns>
         public async Task<GetPlantingSummaryStatusResponse> GetTelematicsNodePlantingSummaryStatus(int nodeId, string trackingCode)
         {
-            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(userKey, publicKey, privateKey, $"telematicsnodev2/{nodeId}/plantingsummary/{trackingCode}/status");
+            Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/plantingsummary/{trackingCode}/status");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/{nodeId}/plantingsummary/{trackingCode}/status", headers);
 
