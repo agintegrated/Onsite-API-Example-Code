@@ -9,9 +9,9 @@ namespace OnsiteAPIExample
     
     static class Program
     {
-        static string  userKey    = "d9ad5f9b-8fb8-4a15-bfb5-7f0fb7d98b79";
-        static string  publicKey  = "5a50b0e0-9b1e-43e0-aad3-cc8cddd65b84";
-        static string  privateKey = "57d91060-ecc4-4a50-b763-88ff4795dbc2";
+        static string  userKey    = "";
+        static string  publicKey  = "";
+        static string  privateKey = "";
 
         static int telematicsNode;
 
