@@ -57,7 +57,6 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="headers"></param>
-        /// 
         #region Http Method helpers
 
         public static async Task<HttpResponseMessage> Get(string endpoint, Dictionary<string, string> headers)

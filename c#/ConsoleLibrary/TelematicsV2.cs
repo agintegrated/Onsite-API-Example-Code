@@ -67,8 +67,7 @@ namespace Onsite_API_Example_Code
         /// The trackingCode can be used in the GET TelematicsNodeV2/{trackingCode}/FileStatus endpoint to get the status of the FDA conversion.
         /// </summary>
         /// <param name="nodeId"></param>
-        /// <param name="pathToFile"></param>
-        /// <param name="fileName"></param>
+        /// <param name="fileToSend"></param>
         /// <returns></returns>
 
         public async Task<PostSendFileResponse> PostSendFiles(int nodeId, FileInfo fileToSend)

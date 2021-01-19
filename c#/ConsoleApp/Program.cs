@@ -2,6 +2,7 @@
 using Onsite_API_Example_Code.Models.Request;
 using Onsite_API_Example_Code.Models.Response;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace OnsiteAPIExample
@@ -9,21 +10,11 @@ namespace OnsiteAPIExample
     
     static class Program
     {
-        static string  userKey    = "";
-        static string  publicKey  = "";
-        static string  privateKey = "";
+        static string userKey = "";
+        static string publicKey = "";
+        static string privateKey = "";
 
         static int telematicsNode;
-
-        /// <summary>
-        /// Example post classes used for the various endpoints
-        /// </summary>
-        //  static PostTelematicsNodeFieldBoundaryRequest postTelematicsNodeFieldBoundary = new PostTelematicsNodeFieldBoundaryRequest { type = "FeatureCollection", features = };
-        //  static RawFileStorageRequest rawFileStorage = new RawFileStorageRequest { AccessKey = "", BucketName = "", Region = "", SecretKey = "", BucketPath = "" };
-        //  static FileRequest fileRequest = new FileRequest { NotificationIds = , RawFileStorage = };
-        //  static PostRequest postRequest = new PostRequest { Url = "" };
-        //  static PostPlantingSummaryRequest postPlantingSummaryRequest = new PostPlantingSummaryRequest { StartDate = DateTime.Parse("2020-04-06T15:34:36.600Z"), EndDate = DateTime.Parse("2020-04-06T15:34:36.600Z"), CallbackURL = "" };
-        //  static PostNotificationSnsRequest postNotificationSnsRequest = new PostNotificationSnsRequest { ApiKey = "", SecretKey = "", TopicArn = "", Region = "" };
 
         /// <summary>
         /// The main entry point for the application.
@@ -31,7 +22,7 @@ namespace OnsiteAPIExample
         [STAThread]
         static async Task Main()
         {
-
+            
         }
 
         public static async Task<GetEquipmentRegisterResponse> RegisterExample()
@@ -49,17 +40,18 @@ namespace OnsiteAPIExample
 
             return response;
         }
-        /*public static async Task<PostSendFileResponse> UploadFileExample(string fileName, string filePath)
+        public static async Task<PostSendFileResponse> UploadFileExample(string fileName, FileInfo file)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            PostSendFileResponse response = await telematicsV2.PostSendFiles(telematicsNode, filePath, fileName);
+            PostSendFileResponse response = await telematicsV2.PostSendFiles(telematicsNode, file);
 
             return response;
-        }*/
-        public static bool DownloadFileExample(string fileId)
+        }
+
+        public static async Task<bool> DownloadFileExample(string fileId)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            telematicsV2.GetDownloadFilesWithoutConversion(telematicsNode, fileId);
+            await telematicsV2.GetDownloadFilesWithoutConversion(telematicsNode, fileId);
 
             return true;
         }
