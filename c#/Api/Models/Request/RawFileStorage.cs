@@ -2,7 +2,7 @@
 
 namespace Onsite_API_Example_Code.Models.Request
 {
-    public class RawFileStorageRequest
+    public class RawFileStorage
     {
 
         [Required]

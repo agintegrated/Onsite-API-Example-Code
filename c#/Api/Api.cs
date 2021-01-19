@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 namespace Onsite_API_Example_Code
 {
     /// <summary>
-    /// Here we do any one-time setup for the entire example project. 
+    /// Here we do any one-time setup for the entire example project. git 
     /// Initialize the the HTTP client used to make calls to it.
     /// </summary>
     public class Api
     {
+        /*
+         * The url below is for the Data Exchange 2.0 Sandbox test environment. This is the environment that should be used for developing against the Data Exchange 2.0 API.
+         * Our production url is at https://qc-pro.onsiteag.com/api and should only be used when deploying code to your own production environment. Data on our production 
+         * environment is live data that should not be used for testing purposes.
+        */
         private static string BaseUrl = "https://sandbox-dataexchange.onsiteag.com/api/";
 
         /// <summary>
@@ -59,7 +64,6 @@ namespace Onsite_API_Example_Code
         {
             var request = GetHttpRequest(headers, endpoint);
             request.Method = HttpMethod.Get;
-
             var response = await Client.SendAsync(request);
             return response;
         }

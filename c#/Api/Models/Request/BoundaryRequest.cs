@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Onsite_API_Example_Code.Models.Request
 {
-    public class PostTelematicsNodeFieldBoundaryRequest
+    public class BoundaryRequest
     {
         [Required]
         public string type { get; set; }

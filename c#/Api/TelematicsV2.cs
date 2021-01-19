@@ -138,7 +138,7 @@ namespace Onsite_API_Example_Code
         /// <param name="postNotificationSnsRequest"></param>
         /// <returns></returns>
 
-        public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollmentSns(int nodeId, PostNotificationSnsRequest postNotificationSnsRequest)
+        public async Task<NodeNotificationResponse> PostNotificationEnrollmentSns(int nodeId, SNSRequest postNotificationSnsRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}/sns", "POST");
 
@@ -148,7 +148,7 @@ namespace Onsite_API_Example_Code
 
             HttpResponseMessage response = await Api.Post($"telematicsnodev2/notifications/{nodeId}/sns", headers, content);
 
-            PostNotificationEnrollmentResponse result = await Api.DeserializeContent<PostNotificationEnrollmentResponse>(response);
+            NodeNotificationResponse result = await Api.DeserializeContent<NodeNotificationResponse>(response);
 
             return result;
         }
@@ -160,7 +160,7 @@ namespace Onsite_API_Example_Code
         /// <param name="nodeId"></param>
         /// <param name="postNotificationRequest"></param>
         /// <returns></returns>
-        public async Task<PostNotificationEnrollmentResponse> PostNotificationEnrollment(int nodeId, PostRequest postNotificationRequest)
+        public async Task<NodeNotificationResponse> PostNotificationEnrollment(int nodeId, PostRequest postNotificationRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}/post", "POST");
 
@@ -170,7 +170,7 @@ namespace Onsite_API_Example_Code
 
             HttpResponseMessage response = await Api.Post($"telematicsnodev2/notifications/{nodeId}/Post", headers, content);
 
-            PostNotificationEnrollmentResponse result = await Api.DeserializeContent<PostNotificationEnrollmentResponse>(response);
+            NodeNotificationResponse result = await Api.DeserializeContent<NodeNotificationResponse>(response);
 
             return result;
         }
@@ -180,13 +180,13 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        public async Task<SuccessMessageResponse> DeleteNotificationDisenrollment(int nodeId)
+        public async Task<EquipmentResponse> DeleteNotificationDisenrollment(int nodeId)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}/disenroll", "DELETE");
 
             HttpResponseMessage response = await Api.Delete($"telematicsnodev2/notifications/{nodeId}/disenroll", headers);
 
-            SuccessMessageResponse result = await Api.DeserializeContent<SuccessMessageResponse>(response);
+            EquipmentResponse result = await Api.DeserializeContent<EquipmentResponse>(response);
 
             return result;
         }
@@ -195,13 +195,13 @@ namespace Onsite_API_Example_Code
         /// The GET TelematicsNodeV2/Notifications/User endpoint retrieves all enrolled notifications for the current user's telematics nodes.
         /// </summary>
         /// <returns></returns>
-        public async Task<GetNotificationResponse> GetNotificationUser()
+        public async Task<UserNotificationResponse> GetNotificationUser()
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/user");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications/user", headers);
 
-            GetNotificationResponse result = await Api.DeserializeContent<GetNotificationResponse>(response);
+            UserNotificationResponse result = await Api.DeserializeContent<UserNotificationResponse>(response);
 
             return result;
         }
@@ -211,13 +211,13 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        public async Task<GetNotificationResponse> GetNotificationUserForNode(int nodeId)
+        public async Task<NodeNotificationResponse> GetNotificationUserForNode(int nodeId)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/user/{nodeId}");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications/user/{nodeId}", headers);
 
-            GetNotificationResponse result = await Api.DeserializeContent<GetNotificationResponse>(response);
+            NodeNotificationResponse result = await Api.DeserializeContent<NodeNotificationResponse>(response);
 
             return result;
         }
@@ -226,13 +226,13 @@ namespace Onsite_API_Example_Code
         /// The GET TelematicsNodeV2/Notifications endpoint retrieves all enrolled notifications for the api partner.
         /// </summary>
         /// <returns></returns>
-        public async Task<GetNotificationResponse> GetNotificationForApiPartner()
+        public async Task<UserNotificationResponse> GetNotificationForApiPartner()
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications", headers);
 
-            GetNotificationResponse result = await Api.DeserializeContent<GetNotificationResponse>(response);
+            UserNotificationResponse result = await Api.DeserializeContent<UserNotificationResponse>(response);
 
             return result;
         }
@@ -242,13 +242,13 @@ namespace Onsite_API_Example_Code
          /// </summary>
          /// <param name="nodeId"></param>
          /// <returns></returns>
-        public async Task<GetNotificationResponse> GetNotificationForApiPartnerByNode(int nodeId)
+        public async Task<NodeNotificationResponse> GetNotificationForApiPartnerByNode(int nodeId)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/{nodeId}");
 
             HttpResponseMessage response = await Api.Get($"telematicsnodev2/notifications/{nodeId}", headers);
 
-            GetNotificationResponse result = await Api.DeserializeContent<GetNotificationResponse>(response);
+            NodeNotificationResponse result = await Api.DeserializeContent<NodeNotificationResponse>(response);
 
             return result;
         }
@@ -259,7 +259,7 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <param name="fileRequest"></param>
         /// <returns></returns>
-        public async Task<PostNotificationEnrollmentResponse> PostNotificationFile(FileRequest fileRequest)
+        public async Task<EnrollFilesResponse> PostNotificationFile(FileRequest fileRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/notifications/file", "POST");
 
@@ -269,7 +269,7 @@ namespace Onsite_API_Example_Code
 
             HttpResponseMessage response = await Api.Post($"telematicsnodev2/notifications/file", headers, content);
 
-            PostNotificationEnrollmentResponse result = await Api.DeserializeContent<PostNotificationEnrollmentResponse>(response);
+            EnrollFilesResponse result = await Api.DeserializeContent<EnrollFilesResponse>(response);
 
             return result;
         }
@@ -296,13 +296,13 @@ namespace Onsite_API_Example_Code
         /// </summary>
         /// <param name="nodeId"></param>
         /// <returns></returns>
-        public async Task<SuccessMessageResponse> DeleteTelematicsNode(int nodeId)
+        public async Task<EquipmentResponse> DeleteTelematicsNode(int nodeId)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}", "DELETE");
 
             HttpResponseMessage response = await Api.Delete($"telematicsnodev2/{nodeId}", headers);
 
-            SuccessMessageResponse result = await Api.DeserializeContent<SuccessMessageResponse>(response);
+            EquipmentResponse result = await Api.DeserializeContent<EquipmentResponse>(response);
 
             return result;
         }
@@ -381,7 +381,7 @@ namespace Onsite_API_Example_Code
         /// <param name="nodeId"></param>
         /// <param name="postTelematicsNodeFieldBoundaryRequest"></param>
         /// <returns></returns>
-        public async Task<SuccessMessageResponse> PostTelematicsNodeFieldBoundary(int nodeId, PostTelematicsNodeFieldBoundaryRequest postTelematicsNodeFieldBoundaryRequest)
+        public async Task<EquipmentResponse> PostTelematicsNodeFieldBoundary(int nodeId, BoundaryRequest postTelematicsNodeFieldBoundaryRequest)
         {
             Dictionary<string, string> headers = ApiUtilities.BuildHeaders(UserKey, PublicKey, PrivateKey, $"telematicsnodev2/{nodeId}/fieldboundary", "POST");
 
@@ -391,7 +391,7 @@ namespace Onsite_API_Example_Code
 
             HttpResponseMessage response = await Api.Post($"telematicsnodev2/{nodeId}/fieldboundary", headers, content);
 
-            SuccessMessageResponse result = await Api.DeserializeContent<SuccessMessageResponse>(response);
+            EquipmentResponse result = await Api.DeserializeContent<EquipmentResponse>(response);
 
             return result;
         }

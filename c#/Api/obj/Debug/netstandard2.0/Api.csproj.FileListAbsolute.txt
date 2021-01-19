@@ -1,0 +1,9 @@
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\bin\Debug\netstandard2.0\Api.deps.json
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\bin\Debug\netstandard2.0\Api.dll
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\bin\Debug\netstandard2.0\Api.pdb
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\obj\Debug\netstandard2.0\Api.csprojAssemblyReference.cache
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\obj\Debug\netstandard2.0\Api.AssemblyInfoInputs.cache
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\obj\Debug\netstandard2.0\Api.AssemblyInfo.cs
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\obj\Debug\netstandard2.0\Api.csproj.CoreCompileInputs.cache
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\obj\Debug\netstandard2.0\Api.dll
+C:\Users\kmeans\Desktop\Onsite-API-Example-Code\c#\Api\obj\Debug\netstandard2.0\Api.pdb
