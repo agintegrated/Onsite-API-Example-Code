@@ -11,9 +11,9 @@ namespace OnsiteAPIExample
 {
     static class Program
     {
-        const string userKey = "a7ffe6fb-d55b-4167-991a-4b0c05bbe7eb";
-        const string publicKey = "86bc1a57-8b51-4f27-9f9b-0f31a9c5b982";
-        const string privateKey = "429ff61d-a60a-4e13-bd21-92777ba4528d";
+        const string userKey = "";
+        const string publicKey = "";
+        const string privateKey = "";
         public static TelematicsV2 DataExchangeAPI;
 
 
@@ -70,7 +70,7 @@ namespace OnsiteAPIExample
             GetTreeResponse tree = await DataExchangeAPI.GetTree();
             if (tree.Success)
             {
-                const string nodeNameToSearchFor = "Tim Butcher Farms";
+                const string nodeNameToSearchFor = "";
                 TelematicsNodeResponse nodeToSendFileTo = FindNode(tree.Data, nodeNameToSearchFor);
 
                 PostSendFileResponse response = await DataExchangeAPI.PostSendFiles(nodeToSendFileTo.TelematicsNodeID, file);
