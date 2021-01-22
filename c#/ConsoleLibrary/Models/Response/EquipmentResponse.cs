@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Onsite_API_Example_Code.Models.Response
 {
-    public class EquipmentResponse
+    public class DeleteNotification
     {
         public bool Success { get; set; }
         public string Message { get; set; }

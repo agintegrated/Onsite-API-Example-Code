@@ -22,6 +22,5 @@ namespace Onsite_API_Example_Code.Models.Response
         
         public string FieldName { get; set; }
         
-        public GeometryInfoResponse Geometry { get; set; }
     }
 }
