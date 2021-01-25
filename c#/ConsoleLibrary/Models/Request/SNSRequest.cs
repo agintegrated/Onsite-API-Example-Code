@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Onsite_API_Example_Code.Models.Response;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Onsite_API_Example_Code.Models.Request
 {
-    public class PostNotificationSnsRequest
+    public class SNSRequest
     {
 
         [Required]
@@ -20,9 +21,9 @@ namespace Onsite_API_Example_Code.Models.Request
         public string Region { get; set; }
 
 
-        public FdaConfigurationRequest FdaConfiguration { get; set; }
+        public FdaConfiguration FdaConfiguration { get; set; }
 
 
-        public RawFileStorageRequest RawFileStorage { get; set; }
+        public RawFileStorage RawFileStorage { get; set; }
     }
 }
