@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Onsite_API_Example_Code.Models.Response
 {
-    public class EnrollPostNotification
+    public class NodeNotificationResponse
     {
         public int TelematicsNodeId { get; set; }
         

@@ -56,26 +56,26 @@ namespace OnsiteAPIExample
             return fileInfo;
         }
 
-        public static async Task<EnrollPostNotification> EnrollSnsNotificationExample(int telematicsNode, SNSRequest snsRequest)
+        public static async Task<NodeNotificationResponse> EnrollSnsNotificationExample(int telematicsNode, SNSRequest snsRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            EnrollPostNotification response = await telematicsV2.PostNotificationEnrollmentSns(telematicsNode, snsRequest);
+            NodeNotificationResponse response = await telematicsV2.PostNotificationEnrollmentSns(telematicsNode, snsRequest);
 
             return response;
         }
 
-        public static async Task<EnrollPostNotification> EnrollPostNotificationExample(int telematicsNode, PostRequest postRequest)
+        public static async Task<NodeNotificationResponse> EnrollPostNotificationExample(int telematicsNode, PostRequest postRequest)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            EnrollPostNotification response = await telematicsV2.PostNotificationEnrollment(telematicsNode, postRequest);
+            NodeNotificationResponse response = await telematicsV2.EnrollPostNotification(telematicsNode, postRequest);
 
             return response;
         }
 
-        public static async Task<DeleteNotification> DeleteNotificationExample(int nodeId)
+        public static async Task<EquipmentResponse> DeleteNotificationExample(int nodeId)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            DeleteNotification response = await telematicsV2.DeleteNotificationDisenrollment(nodeId);
+            EquipmentResponse response = await telematicsV2.Disenroll(nodeId);
 
             return response;
         }
@@ -88,10 +88,10 @@ namespace OnsiteAPIExample
             return response;
         }
 
-        public static async Task<EnrollPostNotification> GetNotificationUserForNodeExample(int nodeId)
+        public static async Task<NodeNotificationResponse> GetNotificationUserForNodeExample(int nodeId)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            EnrollPostNotification response = await telematicsV2.GetNotificationUserForNode(nodeId);
+            NodeNotificationResponse response = await telematicsV2.GetNotificationUserForNode(nodeId);
 
             return response;
         }
@@ -104,10 +104,10 @@ namespace OnsiteAPIExample
             return response;
         }
 
-        public static async Task<EnrollPostNotification> GetNotificationsForApiPartnerByNodeExample(int nodeId)
+        public static async Task<NodeNotificationResponse> GetNotificationsForApiPartnerByNodeExample(int nodeId)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            EnrollPostNotification response = await telematicsV2.GetNotificationForApiPartnerByNode(nodeId);
+            NodeNotificationResponse response = await telematicsV2.GetNotificationForApiPartnerByNode(nodeId);
 
             return response;
         }
@@ -128,10 +128,10 @@ namespace OnsiteAPIExample
             return response;
         }
 
-        public static async Task<DeleteNotification> DeleteTelematicsNode(int nodeId)
+        public static async Task<EquipmentResponse> DeleteTelematicsNode(int nodeId)
         {
             TelematicsV2 telematicsV2 = new TelematicsV2(publicKey, privateKey, userKey);
-            DeleteNotification response = await telematicsV2.DeleteTelematicsNode(nodeId);
+            EquipmentResponse response = await telematicsV2.DeleteTelematicsNode(nodeId);
 
             return response;
         }

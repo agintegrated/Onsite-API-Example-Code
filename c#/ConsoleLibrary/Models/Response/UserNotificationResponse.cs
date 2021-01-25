@@ -12,6 +12,6 @@ namespace Onsite_API_Example_Code.Models.Response
         
         public int Count { get; set; }
         
-        public List<EnrollPostNotification> Data { get; set; }
+        public List<NodeNotificationResponse> Data { get; set; }
     }
 }
